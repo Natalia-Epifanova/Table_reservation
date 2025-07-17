@@ -1,0 +1,25 @@
+:root {
+  --bs-body-bg: rgb(255, 243, 222);
+  --bs-body-color: rgb(33, 33, 33);
+  --bs-emphasis-color: #fff;
+  --bs-secondary-color: rgba(33, 33, 33, 0.75);
+}
+
+body {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  min-height: 100vh;
+}
+
+.custom-navbar {
+  background-color: rgb(33, 33, 33);
+}
+
+.custom-navbar .nav-link {
+  color: #fff3de;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #ffffff;
+}
+
