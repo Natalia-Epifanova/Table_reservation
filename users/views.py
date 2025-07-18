@@ -16,6 +16,7 @@ class CustomLoginView(LoginView):
 
     template_name = "users/login.html"
 
+
 class UserCreateView(CreateView):
     """
     Представление для регистрации нового пользователя с подтверждением по email.
@@ -28,4 +29,3 @@ class UserCreateView(CreateView):
     model = User
     form_class = UserRegisterForm
     success_url = reverse_lazy("users:login")
-

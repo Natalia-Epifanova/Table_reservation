@@ -7,5 +7,4 @@ app_name = TablesConfig.name
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
-
 ]

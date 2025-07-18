@@ -15,4 +15,3 @@ class TableAdmin(admin.ModelAdmin):
 
     list_display = ("table_number", "status", "number_of_seats", "description")
     search_fields = ("table_number", "number_of_seats")
-

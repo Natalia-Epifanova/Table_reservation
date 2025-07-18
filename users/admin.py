@@ -12,4 +12,3 @@ class UserAdmin(admin.ModelAdmin):
     """
 
     list_display = ("id", "email")
-

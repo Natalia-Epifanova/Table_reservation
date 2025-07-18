@@ -39,3 +39,43 @@ body {
   color: var(--bs-body-bg) !important;
   border-color: var(--bs-body-bg) !important;
 }
+
+.btn-custom {
+  background-color: var(--bs-body-color) !important;
+  color: var(--bs-body-bg) !important;
+  border-color: var(--bs-body-color) !important;
+  border-radius: 0 !important;
+  padding: 10px 25px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-custom:hover {
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-body-color) !important;
+  border-color: var(--bs-body-color) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+
+.restaurant-carousel {
+    max-width: 960px;
+    margin: 30px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.carousel-inner {
+    height: 540px;
+}
+
+.carousel-item {
+    height: 100%;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

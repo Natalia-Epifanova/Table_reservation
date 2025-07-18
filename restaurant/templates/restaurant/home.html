@@ -1,13 +1,118 @@
 {% extends "restaurant/base.html" %}
+{% load my_tags %}
 
 {% block header %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-6">Ресторан авторской французской кухни Settlers</h1>
-    <p class="lead">Франция ближе, чем вы думаете</p>
+    <h1 class="display-6">Ресторан итальянской кухни Settlers</h1>
+    <p class="lead">Италия ближе, чем вы думаете</p>
 </div>
 {% endblock %}
 {% block content %}
-<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto">
-    <p>Привет</p>
+
+
+<div class="restaurant-carousel mb-5">
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="2500">
+                <img src="{{ '/slide_1.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 1">
+            </div>
+            <div class="carousel-item" data-bs-interval="2500">
+                <img src="{{ '/slide_2.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 2">
+            </div>
+            <div class="carousel-item" data-bs-interval="2500">
+                <img src="{{ '/slide_3.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 3">
+            </div>
+            <div class="carousel-item" data-bs-interval="2500">
+                <img src="{{ '/slide_4.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 4">
+            </div>
+            <div class="carousel-item" data-bs-interval="2500">
+                <img src="{{ '/slide_5.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 5">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
 </div>
+<div class="text-center my-5">
+    <a class="p-2 btn btn-custom mx-2" href="{{ '/menu.pdf'|media_filter }}" target="_blank">Посмотреть меню</a>
+    <a class="p-2 btn btn-custom mx-2" href="#">Забронировать столик</a>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <h2> Современная Италия поселилась на Васильевском острове</h2>
+            <p class="lead">Settlers - больше, чем просто итальянский ресторан.
+                В основе меню изящное перепрочтение итальянской классики, а в зале атмосфера современной Италии, что
+                поселилась
+                на Васильевском острове. Официанты завершают приготовление блюд прямо перед гостем в лучших традициях
+                эмоционального сервиса.</p>
+            <p class="lead">
+                Для истинных гедонистов до 16.00 подают изысканные и сытные завтраки. А широкой винной карте составляют
+                конкуренцию авторские коктейли. Интересные новинки и сезонное меню разрабатывает бренд-шеф авангардист
+                из Петербурга — <b>Дмитрий Николов.</b></p>
+            <p class="lead">
+                Каждый месяц в Settlers анонсируют новые тематические дегустационные сеты, а по четвергам звучит живая
+                музыка.
+            </p>
+        </div>
+        <div class="col mt-3">
+            <img src="{{ '/dessert.jpg'|media_filter }}" class="d-block w-100" alt="Десерт в огне">
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col mx-auto">
+                <div class="card mx-auto" style="width: 30rem;">
+                  <div class="card-body">
+                      <h2>Контакты</h2>
+                      <h6>Адрес: </h6>
+                      <p> Санкт-Петербург, Железноводская улица, 32</p>
+                      <h6>Телефон: </h6>
+                      <p> +7 999 999 99 99</p>
+                      <h6>Email: </h6>
+                      <p> welcome@settlers.rest</p>
+                      <h6>Режим работы: </h6>
+                      <p> Ежедневно 11:00 - 23:00</p>
+                  </div>
+                </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Свяжитесь с нами</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" action="" class="form-floating">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="name">Имя</label>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phone">Телефон</label>
+                            <input type="text" name="phone" class="form-control" id="phone" placeholder="Контактный телефон" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="message">Сообщение</label>
+                            <textarea type="text" name="message" class="form-control" id="message" placeholder="Сообщение" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}
