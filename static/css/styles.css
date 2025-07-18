@@ -1,8 +1,8 @@
 :root {
   --bs-body-bg: rgb(255, 243, 222);
-  --bs-body-color: rgb(33, 33, 33);
+  --bs-body-color: rgb(59, 59, 59);
   --bs-emphasis-color: #fff;
-  --bs-secondary-color: rgba(33, 33, 33, 0.75);
+  --bs-secondary-color: rgba(59, 59, 59, 0.75);
 }
 
 body {
@@ -12,7 +12,7 @@ body {
 }
 
 .custom-navbar {
-  background-color: rgb(33, 33, 33);
+  background-color: var(--bs-body-color);
 }
 
 .custom-navbar .nav-link {
@@ -23,3 +23,19 @@ body {
   color: #ffffff;
 }
 
+.card {
+    background-color: var(--bs-body-color);
+    color: var(--bs-body-bg);
+}
+
+.btn {
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-body-color) !important;
+  border-color: var(--bs-body-color) !important;
+}
+
+.btn:hover {
+  background-color: var(--bs-body-color) !important;
+  color: var(--bs-body-bg) !important;
+  border-color: var(--bs-body-bg) !important;
+}

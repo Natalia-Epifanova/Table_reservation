@@ -1,8 +1,8 @@
-{% extends "mailing/base.html" %}
+{% extends "restaurant/base.html" %}
 
 {% block header %}
 <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-    <h1 class="display-4">ЗАГОЛОВОК ПОМЕНЯТЬ</h1>
+    <h1 class="display-6">Ресторан авторской французской кухни Settlers</h1>
     <p class="lead">Вход в личный кабинет</p>
 </div>
 {% endblock %}
@@ -30,12 +30,10 @@
                         </div>
                         {% endif %}
                     </div>
-
-                    <button type="submit" class="btn btn-outline-primary">
-                        Войти
-                    </button>
-                    <div class="text-center mt-3 mb-3">
-                        <a href="{% url 'users:password_reset' %}">Забыли пароль?</a>
+                    <div class="px-3 mb-4">
+                        <button type="submit" class="btn">
+                            Войти
+                        </button>
                     </div>
                 </div>
             </form>
