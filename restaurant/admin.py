@@ -13,5 +13,5 @@ class TableAdmin(admin.ModelAdmin):
         search_fields (tuple): Поля, по которым выполняется поиск.
     """
 
-    list_display = ("table_number", "status", "number_of_seats", "description")
+    list_display = ("id", "table_number", "status", "number_of_seats", "description")
     search_fields = ("table_number", "number_of_seats")

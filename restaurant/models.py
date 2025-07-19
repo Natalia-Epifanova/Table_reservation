@@ -8,7 +8,7 @@ class Table(models.Model):
         ("reserved", "Забронирован"),
         ("free", "Свободен"),
     ]
-    table_number = models.CharField(max_length=2, verbose_name="Номер стола")
+    table_number = models.IntegerField(unique=True, verbose_name="Номер стола")
     status = models.CharField(
         max_length=15,
         choices=STATUS_CHOICES,
