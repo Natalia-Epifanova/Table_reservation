@@ -1,17 +1,18 @@
 from django.contrib import admin
 
-from restaurant.models import Table
+from restaurant.models import Table, Reservation
 
 
 @admin.register(Table)
 class TableAdmin(admin.ModelAdmin):
-    """
-    Административный интерфейс для модели Table.
 
-    Attributes:
-        list_display (tuple): Поля, отображаемые в списке объектов.
-        search_fields (tuple): Поля, по которым выполняется поиск.
-    """
 
     list_display = ("id", "table_number", "status", "number_of_seats", "description")
     search_fields = ("table_number", "number_of_seats")
+
+@admin.register(Reservation)
+class ReservationAdmin(admin.ModelAdmin):
+
+
+    list_display = ("id", "table", "number_of_persons", "date_of_reservation", "time_of_reservation", "owner")
+    search_fields = ("table", "date_of_reservation", "time_of_reservation")

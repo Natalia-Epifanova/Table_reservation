@@ -1,7 +1,10 @@
 from django.db import models
 
 from users.models import User
+import datetime
 
+
+RESERVATION_DURATION = datetime.timedelta(hours=2)
 
 class Table(models.Model):
     STATUS_CHOICES = [
@@ -27,7 +30,7 @@ class Table(models.Model):
         verbose_name_plural = "Столы"
 
     def __str__(self):
-        return f"Стол номер {self.table_number} - {self.status}"
+        return f"Стол номер {self.table_number} (максимальное количество персон - {self.number_of_seats})"
 
 
 class Reservation(models.Model):
@@ -39,8 +42,11 @@ class Reservation(models.Model):
         verbose_name="Стол для брони",
     )
     number_of_persons = models.PositiveIntegerField(verbose_name="Количество персон")
-    date_time_of_reservation = models.DateTimeField(
-        verbose_name="Дата и время бронирования"
+    date_of_reservation = models.DateField(default=datetime.date.today,
+        verbose_name="Дата бронирования"
+    )
+    time_of_reservation = models.TimeField(default=datetime.time(11, 0),
+        verbose_name="Время бронирования"
     )
     owner = models.ForeignKey(
         User, on_delete=models.CASCADE, verbose_name="Владелец бронирования"
@@ -54,4 +60,4 @@ class Reservation(models.Model):
         verbose_name_plural = "Бронирования"
 
     def __str__(self):
-        return f"Бронирование стола номер {self.table}. Дата и время: {self.date_time_of_reservation}. Пользователь: {self.owner}"
+        return f"Бронирование стола номер {self.table}. Дата: {self.date_of_reservation}, Время: {self.time_of_reservation}. Пользователь: {self.owner}"
