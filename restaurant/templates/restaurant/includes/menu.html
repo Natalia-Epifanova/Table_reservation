@@ -3,13 +3,13 @@
   <div class="container-fluid">
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav mx-auto">
-        <a class="navbar-brand" href="#" style="padding: 0; margin-right: 2rem;">
-          <img src="{{ 'logo_restaurant.svg'|media_filter }}"
+        <a class="navbar-brand" href="{% url 'restaurant:home' %}" style="padding: 0; margin-right: 2rem;">
+          <img src="{{ 'logo.svg'|media_filter }}"
                alt="Restaurant Logo"
                style="height: 40px; width: auto; display: block;">
         </a>
-        <a class="nav-link" href="#">Главная</a>
-        <a class="nav-link" href="#">О ресторане</a>
+        <a class="nav-link" href="{% url 'restaurant:home' %}">Главная</a>
+        <a class="nav-link" href="{% url 'restaurant:restaurant_info' %}">О ресторане</a>
         <a class="nav-link" href="#">Забронировать столик</a>
         <a class="nav-link" href="{{ '/menu.pdf'|media_filter }}" target="_blank">Меню</a>
       </div>

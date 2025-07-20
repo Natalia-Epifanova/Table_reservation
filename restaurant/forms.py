@@ -1,9 +1,9 @@
-from django.core.exceptions import ValidationError
-from django.forms import ModelForm, DateField, DateInput, TimeInput, TimeField, Textarea
-
-from restaurant.models import Table, Reservation, RESERVATION_DURATION
 import datetime
 
+from django.core.exceptions import ValidationError
+from django.forms import DateField, DateInput, ModelForm, Textarea, TimeField, TimeInput
+
+from restaurant.models import RESERVATION_DURATION, Reservation, Table
 
 
 class StyleFormMixin:
@@ -25,7 +25,7 @@ class TableForm(StyleFormMixin, ModelForm):
         fields = "__all__"
 
     def clean_table_number(self):
-        table_number = self.cleaned_data['table_number']
+        table_number = self.cleaned_data["table_number"]
         query = Table.objects.filter(table_number=table_number)
 
         if self.instance and self.instance.pk:
@@ -39,27 +39,27 @@ class TableForm(StyleFormMixin, ModelForm):
 
 class ReservationForm(StyleFormMixin, ModelForm):
     date_of_reservation = DateField(
-        widget=DateInput(attrs={'type': 'date', 'class': 'form-control'}),
-        label="Дата бронирования"
+        widget=DateInput(attrs={"type": "date", "class": "form-control"}),
+        label="Дата бронирования",
     )
     time_of_reservation = TimeField(
-        widget=TimeInput(attrs={'type': 'time', 'class': 'form-control'}),
-        label="Время бронирования"
+        widget=TimeInput(attrs={"type": "time", "class": "form-control"}),
+        label="Время бронирования",
     )
 
     class Meta:
         model = Reservation
-        exclude = ['owner']
+        exclude = ["owner"]
         widgets = {
-            'comment': Textarea(attrs={'rows': 3}),
+            "comment": Textarea(attrs={"rows": 3}),
         }
 
     def clean(self):
         cleaned_data = super().clean()
-        time = cleaned_data.get('time_of_reservation')
-        date = cleaned_data.get('date_of_reservation')
-        persons = cleaned_data.get('number_of_persons')
-        table = cleaned_data.get('table')
+        time = cleaned_data.get("time_of_reservation")
+        date = cleaned_data.get("date_of_reservation")
+        persons = cleaned_data.get("number_of_persons")
+        table = cleaned_data.get("table")
 
         if time and (time < datetime.time(11, 0) or time > datetime.time(22, 30)):
             raise ValidationError("Ресторан работает с 11:00 до 23:00")
@@ -78,14 +78,12 @@ class ReservationForm(StyleFormMixin, ModelForm):
             end_time = start_time + RESERVATION_DURATION
 
             existing_reservations = Reservation.objects.filter(
-                table=table,
-                date_of_reservation=date
+                table=table, date_of_reservation=date
             ).exclude(pk=self.instance.pk if self.instance else None)
 
             for reservation in existing_reservations:
                 existing_start = datetime.datetime.combine(
-                    reservation.date_of_reservation,
-                    reservation.time_of_reservation
+                    reservation.date_of_reservation, reservation.time_of_reservation
                 )
                 existing_end = existing_start + RESERVATION_DURATION
 
