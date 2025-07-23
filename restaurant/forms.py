@@ -1,7 +1,8 @@
 import datetime
 
 from django.core.exceptions import ValidationError
-from django.forms import DateField, DateInput, ModelForm, Textarea, TimeField, TimeInput
+from django.forms import (DateField, DateInput, Form, IntegerField, ModelForm,
+                          Textarea, TimeField, TimeInput)
 
 from restaurant.models import RESERVATION_DURATION, Reservation, Table
 
@@ -94,3 +95,17 @@ class ReservationForm(StyleFormMixin, ModelForm):
                         f"Пожалуйста, выберите другое время или другой стол."
                     )
         return cleaned_data
+
+
+class AvailableTablesFilterForm(StyleFormMixin, Form):
+    date_of_reservation = DateField(
+        widget=DateInput(attrs={"type": "date"}),
+        label="Дата бронирования",
+        initial=datetime.date.today,
+    )
+    time_of_reservation = TimeField(
+        widget=TimeInput(attrs={"type": "time"}),
+        label="Время бронирования",
+        initial=datetime.time(11, 0),
+    )
+    number_of_persons = IntegerField(label="Количество персон", min_value=1)

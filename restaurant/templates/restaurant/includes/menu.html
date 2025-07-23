@@ -10,7 +10,7 @@
         </a>
         <a class="nav-link" href="{% url 'restaurant:home' %}">Главная</a>
         <a class="nav-link" href="{% url 'restaurant:restaurant_info' %}">О ресторане</a>
-        <a class="nav-link" href="#">Забронировать столик</a>
+        <a class="nav-link" href="{% url 'restaurant:reservation_create' %}">Забронировать столик</a>
         <a class="nav-link" href="{{ '/menu.pdf'|media_filter }}" target="_blank">Меню</a>
       </div>
 

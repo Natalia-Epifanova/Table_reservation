@@ -1,17 +1,11 @@
 from django.urls import path
 
 from restaurant.apps import TablesConfig
-from restaurant.views import (
-    HomeView,
-    ReservationCreateView,
-    ReservationDeleteView,
-    ReservationDetailView,
-    ReservationUpdateView,
-    RestaurantInfoView,
-    TableCreateView,
-    TableDeleteView,
-    TableUpdateView,
-)
+from restaurant.views import (AvailableTablesListView, HomeView,
+                              ReservationCreateView, ReservationDeleteView,
+                              ReservationDetailView, ReservationUpdateView,
+                              RestaurantInfoView, TableCreateView,
+                              TableDeleteView, TableUpdateView)
 
 app_name = TablesConfig.name
 
@@ -40,5 +34,8 @@ urlpatterns = [
         "reservation/<int:pk>/",
         ReservationDetailView.as_view(),
         name="reservation_detail",
+    ),
+    path(
+        "available-tables/", AvailableTablesListView.as_view(), name="available_tables"
     ),
 ]

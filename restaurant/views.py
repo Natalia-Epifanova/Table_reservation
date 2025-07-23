@@ -1,16 +1,14 @@
+import datetime
+
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
 from django.urls import reverse_lazy
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    TemplateView,
-    UpdateView,
-)
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  TemplateView, UpdateView)
 
-from restaurant.forms import ReservationForm, TableForm
-from restaurant.models import Reservation, Table
+from restaurant.forms import (AvailableTablesFilterForm, ReservationForm,
+                              TableForm)
+from restaurant.models import RESERVATION_DURATION, Reservation, Table
 
 
 class OwnerRequiredMixin(UserPassesTestMixin):
@@ -68,10 +66,27 @@ class TableDeleteView(UserPassesTestMixin, DeleteView):
 
 
 class ReservationCreateView(LoginRequiredMixin, CreateView):
-
     model = Reservation
     form_class = ReservationForm
     success_url = reverse_lazy("restaurant:home")
+
+    def get_initial(self):
+        initial = super().get_initial()
+        if "table_id" in self.request.GET:
+            initial["table"] = self.request.GET["table_id"]
+        if "date" in self.request.GET:
+            initial["date_of_reservation"] = self.request.GET["date"]
+        elif "date_of_reservation" in self.request.GET:
+            initial["date_of_reservation"] = self.request.GET["date_of_reservation"]
+        if "time" in self.request.GET:
+            initial["time_of_reservation"] = self.request.GET["time"]
+        elif "time_of_reservation" in self.request.GET:
+            initial["time_of_reservation"] = self.request.GET["time_of_reservation"]
+        if "persons" in self.request.GET:
+            initial["number_of_persons"] = self.request.GET["persons"]
+        elif "number_of_persons" in self.request.GET:
+            initial["number_of_persons"] = self.request.GET["number_of_persons"]
+        return initial
 
     def form_valid(self, form):
         form.instance.owner = self.request.user
@@ -79,18 +94,55 @@ class ReservationCreateView(LoginRequiredMixin, CreateView):
 
 
 class ReservationUpdateView(OwnerRequiredMixin, LoginRequiredMixin, UpdateView):
-
     model = Reservation
     form_class = ReservationForm
     success_url = reverse_lazy("restaurant:home")
 
 
 class ReservationDetailView(OwnerRequiredMixin, LoginRequiredMixin, DetailView):
-
     model = Reservation
 
 
 class ReservationDeleteView(OwnerRequiredMixin, LoginRequiredMixin, DeleteView):
-
     model = Reservation
     success_url = reverse_lazy("restaurant:home")
+
+
+class AvailableTablesListView(ListView):
+    model = Table
+    template_name = "restaurant/available_tables.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["filter_form"] = AvailableTablesFilterForm(self.request.GET or None)
+        return context
+
+    def get_queryset(self):
+        form = AvailableTablesFilterForm(self.request.GET or None)
+        queryset = Table.objects.all()
+
+        if form.is_valid():
+            date = form.cleaned_data["date_of_reservation"]
+            time = form.cleaned_data["time_of_reservation"]
+            persons = form.cleaned_data["number_of_persons"]
+
+            queryset = queryset.filter(number_of_seats__gte=persons)
+
+            start_time = datetime.datetime.combine(date, time)
+            end_time = start_time + RESERVATION_DURATION
+
+            reservations = Reservation.objects.filter(date_of_reservation=date)
+
+            reserved_tables = []
+            for reservation in reservations:
+                reservation_start = datetime.datetime.combine(
+                    date, reservation.time_of_reservation
+                )
+                reservation_end = reservation_start + RESERVATION_DURATION
+
+                if not (reservation_end <= start_time or reservation_start >= end_time):
+                    reserved_tables.append(reservation.table_id)
+
+            queryset = queryset.exclude(id__in=reserved_tables)
+
+        return queryset

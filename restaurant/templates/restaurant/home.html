@@ -46,7 +46,7 @@
 </div>
 <div class="text-center my-5">
     <a class="p-2 btn btn-custom mx-2" href="{{ '/menu.pdf'|media_filter }}" target="_blank">Посмотреть меню</a>
-    <a class="p-2 btn btn-custom mx-2" href="#">Забронировать столик</a>
+    <a class="p-2 btn btn-custom mx-2" href="{% url 'restaurant:reservation_create' %}">Забронировать столик</a>
 </div>
 
 
