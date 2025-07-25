@@ -1,8 +1,8 @@
 import datetime
 
 from django.core.exceptions import ValidationError
-from django.forms import (DateField, DateInput, Form, IntegerField, ModelForm,
-                          Textarea, TimeField, TimeInput)
+from django.forms import (CharField, DateField, DateInput, Form, IntegerField,
+                          ModelForm, Textarea, TimeField, TimeInput)
 
 from restaurant.models import RESERVATION_DURATION, Reservation, Table
 
@@ -109,3 +109,9 @@ class AvailableTablesFilterForm(StyleFormMixin, Form):
         initial=datetime.time(11, 0),
     )
     number_of_persons = IntegerField(label="Количество персон", min_value=1)
+
+
+class ContactForm(StyleFormMixin, Form):
+    name = CharField(max_length=100, label="Имя")
+    phone = CharField(max_length=20, label="Телефон", required=False)
+    message = CharField(widget=Textarea, label="Сообщение")

@@ -2,12 +2,13 @@ import datetime
 
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
+from django.db import IntegrityError, transaction
 from django.urls import reverse_lazy
-from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
-                                  TemplateView, UpdateView)
+from django.views.generic import (CreateView, DeleteView, DetailView, FormView,
+                                  ListView, TemplateView, UpdateView)
 
-from restaurant.forms import (AvailableTablesFilterForm, ReservationForm,
-                              TableForm)
+from restaurant.forms import (AvailableTablesFilterForm, ContactForm,
+                              ReservationForm, TableForm)
 from restaurant.models import RESERVATION_DURATION, Reservation, Table
 
 
@@ -20,8 +21,17 @@ class OwnerRequiredMixin(UserPassesTestMixin):
         raise PermissionDenied("Вы не являетесь владельцем этого бронирования")
 
 
-class HomeView(TemplateView):
+class HomeView(FormView):
     template_name = "restaurant/home.html"
+    form_class = ContactForm
+    success_url = reverse_lazy("restaurant:home")
+
+    def form_valid(self, form):
+        name = form.cleaned_data["name"]
+        phone = form.cleaned_data.get("phone", "не указан")
+        message = form.cleaned_data["message"]
+        print(f"Получено сообщение от {name} (телефон: {phone}): {message}")
+        return super().form_valid(form)
 
 
 class RestaurantInfoView(TemplateView):
@@ -68,7 +78,11 @@ class TableDeleteView(UserPassesTestMixin, DeleteView):
 class ReservationCreateView(LoginRequiredMixin, CreateView):
     model = Reservation
     form_class = ReservationForm
-    success_url = reverse_lazy("restaurant:home")
+
+    def get_success_url(self):
+        return reverse_lazy(
+            "restaurant:reservation_detail", kwargs={"pk": self.object.pk}
+        )
 
     def get_initial(self):
         initial = super().get_initial()
@@ -88,15 +102,32 @@ class ReservationCreateView(LoginRequiredMixin, CreateView):
             initial["number_of_persons"] = self.request.GET["number_of_persons"]
         return initial
 
+    @transaction.atomic
     def form_valid(self, form):
-        form.instance.owner = self.request.user
-        return super().form_valid(form)
+        try:
+            form.instance.owner = self.request.user
+            response = super().form_valid(form)
+            return response
+        except IntegrityError as e:
+            if "unique_reservation" in str(e):
+                form.add_error(
+                    None,
+                    "Этот стол на данное время уже занят. Пожалуйста, выберите другой стол или время.",
+                )
+            else:
+                form.add_error(
+                    None,
+                    "Произошла ошибка при бронировании. Пожалуйста, попробуйте еще раз.",
+                )
+            return self.form_invalid(form)
 
 
 class ReservationUpdateView(OwnerRequiredMixin, LoginRequiredMixin, UpdateView):
     model = Reservation
     form_class = ReservationForm
-    success_url = reverse_lazy("restaurant:home")
+
+    def get_success_url(self):
+        return reverse_lazy("users:profile_detail", kwargs={"pk": self.request.user.pk})
 
 
 class ReservationDetailView(OwnerRequiredMixin, LoginRequiredMixin, DetailView):
@@ -105,7 +136,15 @@ class ReservationDetailView(OwnerRequiredMixin, LoginRequiredMixin, DetailView):
 
 class ReservationDeleteView(OwnerRequiredMixin, LoginRequiredMixin, DeleteView):
     model = Reservation
+
+    def get_success_url(self):
+        return reverse_lazy("users:profile_detail", kwargs={"pk": self.request.user.pk})
+
+
+class ReservationListView(OwnerRequiredMixin, LoginRequiredMixin, ListView):
+    model = Reservation
     success_url = reverse_lazy("restaurant:home")
+    context_object_name = "reservations"
 
 
 class AvailableTablesListView(ListView):

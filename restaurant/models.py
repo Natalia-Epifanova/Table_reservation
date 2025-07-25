@@ -8,17 +8,8 @@ RESERVATION_DURATION = datetime.timedelta(hours=2)
 
 
 class Table(models.Model):
-    STATUS_CHOICES = [
-        ("reserved", "Забронирован"),
-        ("free", "Свободен"),
-    ]
+
     table_number = models.IntegerField(unique=True, verbose_name="Номер стола")
-    status = models.CharField(
-        max_length=15,
-        choices=STATUS_CHOICES,
-        default="free",
-        verbose_name="Статус бронирования стола",
-    )
     number_of_seats = models.PositiveIntegerField(
         verbose_name="Количество мест за столом"
     )
@@ -59,6 +50,12 @@ class Reservation(models.Model):
     class Meta:
         verbose_name = "Бронирование"
         verbose_name_plural = "Бронирования"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["table", "date_of_reservation", "time_of_reservation"],
+                name="unique_reservation",
+            )
+        ]
 
     def __str__(self):
         return (

@@ -6,7 +6,7 @@ from restaurant.models import Reservation, Table
 @admin.register(Table)
 class TableAdmin(admin.ModelAdmin):
 
-    list_display = ("id", "table_number", "status", "number_of_seats", "description")
+    list_display = ("id", "table_number", "number_of_seats", "description")
     search_fields = ("table_number", "number_of_seats")
 
 

@@ -34,6 +34,7 @@ body {
   border-color: var(--bs-body-color) !important;
 }
 
+
 .btn:hover {
   background-color: var(--bs-body-color) !important;
   color: var(--bs-body-bg) !important;
@@ -78,4 +79,23 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.table {
+  --bs-table-bg: var(--bs-body-bg) !important;
+  --bs-table-color: var(--bs-body-color) !important;
+  --bs-table-border-color: rgba(0, 0, 0, 0.1) !important;
+  width: 100%;
+  margin-bottom: 1rem;
+  color: var(--bs-table-color) !important;
+  background-color: var(--bs-table-bg) !important;
+  border-color: var(--bs-table-border-color) !important;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid var(--bs-table-border-color);
+  color: var(--bs-table-color) !important;
 }

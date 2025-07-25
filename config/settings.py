@@ -81,7 +81,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-LANGUAGE_CODE = "en-us"
+# LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
 
@@ -104,3 +104,5 @@ AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "/"
 
 LOGOUT_REDIRECT_URL = "/"
+USE_L10N = True
+LANGUAGE_CODE = "ru-ru"
