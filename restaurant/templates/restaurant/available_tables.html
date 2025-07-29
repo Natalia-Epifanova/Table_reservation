@@ -1,0 +1,50 @@
+{% extends "restaurant/base.html" %}
+
+{% block header %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-6">Доступные столы</h1>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <form method="get" class="mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        {{ filter_form.as_p }}
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Показать доступные столы</button>
+                    </div>
+                </div>
+            </form>
+
+            {% if object_list %}
+            <h3>Доступные столы:</h3>
+            <ul class="list-group">
+                {% for table in object_list %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <div>
+                        Стол №{{ table.table_number }}. Максимальное количество персон: {{ table.number_of_seats }}.
+                        {% if table.description %}
+                        <span class="text-muted">(Описание: {{ table.description }})</span>
+                        {% endif %}
+                    </div>
+                    <a href="{% url 'restaurant:reservation_create' %}?table_id={{ table.id }}&date={{ request.GET.date_of_reservation }}&time={{ request.GET.time_of_reservation }}&persons={{ request.GET.number_of_persons }}"
+                       class="btn btn-sm btn-primary">
+                        Забронировать
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <div class="alert alert-info">
+                Нет доступных столов по выбранным параметрам.
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

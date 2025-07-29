@@ -1,0 +1,101 @@
+:root {
+  --bs-body-bg: rgb(255, 243, 222);
+  --bs-body-color: rgb(59, 59, 59);
+  --bs-emphasis-color: #fff;
+  --bs-secondary-color: rgba(59, 59, 59, 0.75);
+}
+
+body {
+  background-color: var(--bs-body-bg);
+  color: var(--bs-body-color);
+  min-height: 100vh;
+}
+
+.custom-navbar {
+  background-color: var(--bs-body-color);
+}
+
+.custom-navbar .nav-link {
+  color: #fff3de;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #ffffff;
+}
+
+.card {
+    background-color: var(--bs-body-color);
+    color: var(--bs-body-bg);
+}
+
+.btn {
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-body-color) !important;
+  border-color: var(--bs-body-color) !important;
+}
+
+
+.btn:hover {
+  background-color: var(--bs-body-color) !important;
+  color: var(--bs-body-bg) !important;
+  border-color: var(--bs-body-bg) !important;
+}
+
+.btn-custom {
+  background-color: var(--bs-body-color) !important;
+  color: var(--bs-body-bg) !important;
+  border-color: var(--bs-body-color) !important;
+  border-radius: 0 !important;
+  padding: 10px 25px !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.btn-custom:hover {
+  background-color: var(--bs-body-bg) !important;
+  color: var(--bs-body-color) !important;
+  border-color: var(--bs-body-color) !important;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+
+.restaurant-carousel {
+    max-width: 960px;
+    margin: 30px auto;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.carousel-inner {
+    height: 540px;
+}
+
+.carousel-item {
+    height: 100%;
+}
+
+.carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.table {
+  --bs-table-bg: var(--bs-body-bg) !important;
+  --bs-table-color: var(--bs-body-color) !important;
+  --bs-table-border-color: rgba(0, 0, 0, 0.1) !important;
+  width: 100%;
+  margin-bottom: 1rem;
+  color: var(--bs-table-color) !important;
+  background-color: var(--bs-table-bg) !important;
+  border-color: var(--bs-table-border-color) !important;
+}
+
+.table th,
+.table td {
+  padding: 0.75rem;
+  vertical-align: top;
+  border-top: 1px solid var(--bs-table-border-color);
+  color: var(--bs-table-color) !important;
+}
