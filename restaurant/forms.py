@@ -110,6 +110,11 @@ class AvailableTablesFilterForm(StyleFormMixin, Form):
     )
     number_of_persons = IntegerField(label="Количество персон", min_value=1)
 
+    def clean_date_of_reservation(self):
+        date = self.cleaned_data['date_of_reservation']
+        if date < datetime.date.today():
+            raise ValidationError("Нельзя выбрать дату раньше сегодняшнего дня")
+        return date
 
 class ContactForm(StyleFormMixin, Form):
     name = CharField(max_length=100, label="Имя")

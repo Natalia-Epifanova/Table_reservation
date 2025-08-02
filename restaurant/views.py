@@ -153,7 +153,13 @@ class AvailableTablesListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["filter_form"] = AvailableTablesFilterForm(self.request.GET or None)
+        form = AvailableTablesFilterForm(self.request.GET or None)
+        context["filter_form"] = form
+
+        if self.request.GET and not form.is_valid():
+            context["form_invalid"] = True
+            context["form_errors"] = form.errors
+
         return context
 
     def get_queryset(self):
@@ -183,5 +189,7 @@ class AvailableTablesListView(ListView):
                     reserved_tables.append(reservation.table_id)
 
             queryset = queryset.exclude(id__in=reserved_tables)
+        else:
+            queryset = queryset.none()
 
         return queryset
