@@ -1,0 +1,110 @@
+{% extends "restaurant/base.html" %}
+{% load my_tags %}
+
+{% block header %}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+    <h1 class="display-6">Ресторан итальянской кухни Italy</h1>
+    <p class="lead">Италия ближе, чем вы думаете</p>
+</div>
+{% endblock %}
+{% block content %}
+
+
+<div class="restaurant-carousel mb-5">
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="2500">
+                <img src="{{ '/slide_1.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 1">
+            </div>
+            <div class="carousel-item" data-bs-interval="2500">
+                <img src="{{ '/slide_2.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 2">
+            </div>
+            <div class="carousel-item" data-bs-interval="2500">
+                <img src="{{ '/slide_3.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 3">
+            </div>
+            <div class="carousel-item" data-bs-interval="2500">
+                <img src="{{ '/slide_4.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 4">
+            </div>
+            <div class="carousel-item" data-bs-interval="2500">
+                <img src="{{ '/slide_5.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 5">
+            </div>
+            <div class="carousel-item" data-bs-interval="2500">
+                <img src="{{ '/slide_6.jpg'|media_filter }}" class="d-block w-100" alt="Слайд 6">
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+<div class="text-center my-5">
+    <a class="p-2 btn btn-custom mx-2" href="{{ '/menu.pdf'|media_filter }}" target="_blank">Посмотреть меню</a>
+    <a class="p-2 btn btn-custom mx-2"
+       href="{% if user.is_authenticated %}{% url 'restaurant:reservation_create' %}{% else %}{% url 'users:register' %}{% endif %}">Забронировать
+        столик</a>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col">
+            <h2> Двухэтажный ресторан на Большом проспекте</h2>
+            <p class="lead">Ресторан Italy на Большом проспекте Петроградской стороны теперь предлагает ещё больше
+                пространства для гостей, открыв новый двухэтажный формат. Italy сочетает в себе современную атмосферу и
+                дух традиционных итальянских праздников, делая каждый визит незабываемым.</p>
+            <p class="lead">
+                Italy на Большом, 58 с панорамными окнами — ресторан на каждый день, место для завтраков в самом сердце
+                Петроградки.</p>
+            <p class="lead">
+
+                Итальянские, мясные, грузинские рестораны, бельгийские пабы, фудмаркеты, испанские бары, загородные
+                ресторанные проекты и доставка еды — italy реализует любой концепт о вкусе и еде.
+            </p>
+        </div>
+        <div class="col">
+            <img src="{{ '/dessert.jpg'|media_filter }}" class="d-block w-100" alt="Десерт в огне">
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col mx-auto">
+            <div class="card mx-auto" style="width: 30rem;">
+                <div class="card-body">
+                    <h2>Контакты</h2>
+                    <h6>Адрес: </h6>
+                    <p> Санкт-Петербург, Большой проспект П.С., 58, 4 этаж</p>
+                    <h6>Телефон: </h6>
+                    <p> +7 999 999 99 99</p>
+                    <h6>Email: </h6>
+                    <p> welcome@italy.rest</p>
+                    <h6>Режим работы: </h6>
+                    <p> Ежедневно 11:00 - 23:00</p>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header">
+                    <h4 class="my-0 font-weight-normal">Свяжитесь с нами</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post" class="form-floating">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <button type="submit" class="btn btn-lg btn-block btn-outline-primary">Отправить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
