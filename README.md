@@ -24,7 +24,7 @@
 ### Инструкции по запуску
 1. Клонируйте репозиторий:
 - ```git clone https://github.com/Natalia-Epifanova/Table_reservation```
-- ```cd restaurant-booking```
+- ```cd table_reservation```
 - Создайте файл ```.env``` в корне проекта на основе ```.env.example```:
 - Заполните необходимые переменные окружения в файле .env
 - Запустите проект с помощью Docker Compose: ```docker-compose up -d --build```
